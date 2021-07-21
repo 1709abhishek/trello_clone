@@ -25,6 +25,8 @@ export default function Card({ card, index, listId }) {
             </button>
             <br></br>
             <span>{card.desc}</span>
+            <br></br>
+            <span>TimeStamp: {card.date}</span>
           </Paper>
         </div>
       )}

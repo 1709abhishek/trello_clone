@@ -7,6 +7,7 @@ import InputContainer from './components/Input/InputContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useLocalStorage } from './utils/useLocalStorage';
+import { compare } from './utils/helper';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -43,11 +44,13 @@ export default function App() {
     const newCard = {
       id: newCardId,
       title,
-      desc: description
+      desc: description,
+      date: Date.now()
     };
 
     const list = data.lists[listId];
     list.cards = [...list.cards, newCard];
+    list.cards.sort(compare);
 
     const newState = {
       ...data,
@@ -119,6 +122,7 @@ export default function App() {
         // }
         const arr = temp[i]?.cards.filter(ele => ele.id !== CardId);
         temp[i].cards = arr;
+        temp[i].cards.sort(compare);
       }
     }
     // console.log(temp);
@@ -146,6 +150,8 @@ export default function App() {
     if (source.droppableId === destination.droppableId) {
       sourceList.cards.splice(source.index, 1);
       destinationList.cards.splice(destination.index, 0, draggingCard);
+      destinationList.cards.sort(compare);
+      sourceList.cards.sort(compare);
       const newSate = {
         ...data,
         lists: {
@@ -157,7 +163,8 @@ export default function App() {
     } else {
       sourceList.cards.splice(source.index, 1);
       destinationList.cards.splice(destination.index, 0, draggingCard);
-
+      destinationList.cards.sort(compare);
+      sourceList.cards.sort(compare);
       const newState = {
         ...data,
         lists: {
