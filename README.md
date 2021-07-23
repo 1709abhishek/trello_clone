@@ -7,3 +7,7 @@ npm i
 cd trello_clone
 
 npm start
+
+## Deployment
+
+https://trello-basic-app.netlify.app/
